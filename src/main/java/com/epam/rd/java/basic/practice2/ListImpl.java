@@ -63,9 +63,9 @@ public class ListImpl implements List {
 
     private class IteratorImpl implements Iterator<Object> {
 
-        private ListImpl.Node lastReturned;
-        private ListImpl.Node next;
-        private int nextIndex;
+        ListImpl.Node lastReturned;
+        ListImpl.Node next;
+        int nextIndex;
 
         @Override
         public boolean hasNext() {

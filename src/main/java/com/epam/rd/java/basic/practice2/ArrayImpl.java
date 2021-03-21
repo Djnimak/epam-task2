@@ -5,9 +5,9 @@ import java.util.NoSuchElementException;
 
 public class ArrayImpl implements Array {
 
-    private Object[] arrayList;
+    Object[] arrayList;
     int size;
-    private int capcaity;
+    int capcaity;
 
 
     ArrayImpl() {
