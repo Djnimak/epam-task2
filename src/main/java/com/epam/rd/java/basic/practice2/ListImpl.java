@@ -12,10 +12,10 @@ public class ListImpl implements List {
     private Node last;
     int listSize;
 
-    ListImpl() {
+    private ListImpl() {
     }
 
-    ListImpl(int listSize) {
+    private ListImpl(int listSize) {
         this.listSize = listSize;
         first = null;
         last = null;
@@ -120,7 +120,7 @@ public class ListImpl implements List {
         ListImpl.Node l = this.last;
         ListImpl.Node newNode = new ListImpl.Node(l, element, null);
         this.last = newNode;
-        if (l == null) this.first = newNode;
+        if (l == null) {this.first = newNode;}
         else {
             l.next = newNode;
         }
@@ -128,33 +128,33 @@ public class ListImpl implements List {
         ++this.modCount;
     }
 
-    public void unlinkFirst(Node f) {
-        ListImpl.Node next = f.next;
-        f.data = null;
-        f.next = null;
-        this.first = next;
-        if (next == null) {
-            this.last = null;
-        } else {
-            next.prev = null;
-        }
-        --this.listSize;
-        ++this.modCount;
-    }
-
-    public void unlinkLast(Node l) {
-        ListImpl.Node prev = l.prev;
-        l.data = null;
-        l.prev = null;
-        this.last = prev;
-        if (prev == null) {
-            this.first = null;
-        } else {
-            prev.next = null;
-        }
-        --this.listSize;
-        ++this.modCount;
-    }
+//    public void unlinkFirst(Node f) {
+//        ListImpl.Node next = f.next;
+//        f.data = null;
+//        f.next = null;
+//        this.first = next;
+//        if (next == null) {
+//            this.last = null;
+//        } else {
+//            next.prev = null;
+//        }
+//        --this.listSize;
+//        ++this.modCount;
+//    }
+//
+//    public void unlinkLast(Node l) {
+//        ListImpl.Node prev = l.prev;
+//        l.data = null;
+//        l.prev = null;
+//        this.last = prev;
+//        if (prev == null) {
+//            this.first = null;
+//        } else {
+//            prev.next = null;
+//        }
+//        --this.listSize;
+//        ++this.modCount;
+//    }
 
     void unlink(Node x) {
         ListImpl.Node next = x.next;
@@ -183,7 +183,7 @@ public class ListImpl implements List {
         if (f == null) {
             throw new NoSuchElementException();
         } else {
-            this.unlinkFirst(f);
+            this.unlink(f);
         }
     }
 
@@ -193,7 +193,7 @@ public class ListImpl implements List {
         if (l == null) {
             throw new NoSuchElementException();
         } else {
-            this.unlinkLast(l);
+            this.unlink(l);
         }
     }
 
@@ -282,8 +282,8 @@ public class ListImpl implements List {
         list.addLast('B');
         list.addLast('C');
         System.out.println(iter.hasNext());
-        System.out.println(iter.next());
         list.removeFirst();
+        System.out.println(list);
         list.removeLast();
         System.out.println(list.getFirst());
         System.out.println(list.getLast());
