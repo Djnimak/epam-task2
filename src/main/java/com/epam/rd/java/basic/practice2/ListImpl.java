@@ -83,7 +83,11 @@ public class ListImpl implements List {
                 this.next = next.next;
                 }
                 ++this.nextIndex;
-                return this.lastReturned.data;
+                Object o = null;
+                if (this.lastReturned.data != null) {
+                    o = this.lastReturned.data;
+                }
+                return o;
             }
         }
 
@@ -168,7 +172,6 @@ public class ListImpl implements List {
             prev.next = next;
             x.prev = null;
         }
-
         if (next == null) {
             this.last = prev;
         } else {
@@ -202,22 +205,18 @@ public class ListImpl implements List {
 
     @Override
     public Object getFirst() {
-        ListImpl.Node f = null;
-        if (this.first != null) {
-            f = this.first;
-        }
-        if (f == null) {
+        ListImpl.Node f;
+        if (this.first == null) {
             throw new NoSuchElementException();
-        } else {
-            return f.data;
-        }
+        } else {f = this.first;}
+        return f.data;
     }
 
     @Override
     public Object getLast() {
         ListImpl.Node l = this.first;
         if (l == null) {
-            throw new NoSuchElementException();
+            return null;
         } else {
             return l.data;
         }

@@ -10,7 +10,6 @@ public class StackImpl implements Stack {
 
     StackImpl() {
         this(0);
-        new ArrayImpl(0);
     }
 
     StackImpl(int size) {

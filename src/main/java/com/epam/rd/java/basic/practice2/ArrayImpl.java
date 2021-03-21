@@ -22,7 +22,9 @@ public class ArrayImpl implements Array {
     @Override
     public void clear() {
         for (int i = 0; i < arrayList.length; i++) {
-            arrayList[i] = null;
+            if (arrayList[i] != null) {
+                arrayList[i] = null;
+            }
         }
     }
 
@@ -41,7 +43,9 @@ public class ArrayImpl implements Array {
 
         @Override
         public boolean hasNext() {
-            return currentIndex < size && arrayList[currentIndex] != null;
+            if (arrayList[currentIndex] == null) {
+                throw new NullPointerException();
+            } else {return currentIndex < size && arrayList[currentIndex] != null;}
         }
 
         @Override
@@ -105,7 +109,11 @@ public class ArrayImpl implements Array {
         if (index < 0 || index > size()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
-        return arrayList[index];
+        Object o = null;
+        if (arrayList[index] != null) {
+            o = arrayList[index];
+        }
+        return o;
     }
 
     @Override
@@ -124,7 +132,9 @@ public class ArrayImpl implements Array {
         if (index < 0 || index > size()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
-        arrayList[index] = null;
+        if (arrayList[index] != null) {
+            arrayList[index] = null;
+        }
     }
 
     @Override

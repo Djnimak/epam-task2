@@ -10,7 +10,6 @@ public class QueueImpl implements Queue {
 
     QueueImpl() {
         this(0);
-        new ListImpl(0);
     }
 
     public QueueImpl(int size) {
