@@ -7,10 +7,8 @@ public class QueueImpl implements Queue {
 
     ListImpl queue = new ListImpl();
 
-
-    public QueueImpl() {
+    QueueImpl() {
     }
-
 
     @Override
     public void clear() {

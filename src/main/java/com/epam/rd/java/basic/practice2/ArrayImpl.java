@@ -9,14 +9,13 @@ public class ArrayImpl implements Array {
     int size;
     int capcaity;
 
-
-    private ArrayImpl() {
+    public ArrayImpl() {
         capcaity = 0;
         size = 0;
         arrayList = new Object[capcaity];
     }
 
-    private ArrayImpl(int capcaity) {
+    public ArrayImpl(int capcaity) {
         this.capcaity = capcaity;
         size = 0;
         arrayList = new Object[capcaity];

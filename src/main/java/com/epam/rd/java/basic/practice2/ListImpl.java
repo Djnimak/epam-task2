@@ -12,10 +12,10 @@ public class ListImpl implements List {
     private Node last;
     int listSize;
 
-    private ListImpl() {
+    public ListImpl() {
     }
 
-    private ListImpl(int listSize) {
+    public ListImpl(int listSize) {
         this.listSize = listSize;
         first = null;
         last = null;
