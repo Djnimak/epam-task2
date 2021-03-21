@@ -6,9 +6,16 @@ import java.util.NoSuchElementException;
 public class QueueImpl implements Queue {
 
     ListImpl queue = new ListImpl();
+    int size;
 
     QueueImpl() {
+        this(0);
         new ListImpl(0);
+    }
+
+    public QueueImpl(int size) {
+        this.size = size;
+        new ListImpl(size);
     }
 
     @Override

@@ -78,8 +78,10 @@ public class ListImpl implements List {
             if (!this.hasNext()) {
                 throw new NoSuchElementException();
             } else {
+                if (this.next != null) {
                 this.lastReturned = this.next;
                 this.next = next.next;
+                }
                 ++this.nextIndex;
                 return this.lastReturned.data;
             }
@@ -200,7 +202,10 @@ public class ListImpl implements List {
 
     @Override
     public Object getFirst() {
-        ListImpl.Node f = this.first;
+        ListImpl.Node f = null;
+        if (this.first != null) {
+            f = this.first;
+        }
         if (f == null) {
             throw new NoSuchElementException();
         } else {
@@ -222,19 +227,11 @@ public class ListImpl implements List {
     public Object search(Object element) {
         ListImpl.Node x;
         Object e = null;
-        if (element == null) {
-            for (x = this.first; x != null; x = x.next) {
-                if (x.data == null) {
-                    break;
-                }
-            }
-        } else {
             for (x = this.first; x != null; x = x.next) {
                 if (element.equals(x.data)) {
                     e = x.data;
                 }
             }
-        }
         return e;
     }
 
@@ -282,6 +279,10 @@ public class ListImpl implements List {
         list.addFirst('A');
         list.addLast('B');
         list.addLast('C');
+        list.addLast(null);
+        list.remove(null);
+        System.out.println(list);
+        System.out.println(list.search('A'));
         System.out.println(iter.hasNext());
         list.removeFirst();
         System.out.println(list);

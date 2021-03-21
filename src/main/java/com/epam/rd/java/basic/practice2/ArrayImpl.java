@@ -74,7 +74,9 @@ public class ArrayImpl implements Array {
         }
         arrayList = temp;
         capcaity += 1;
-        arrayList[size] = element;
+        if (arrayList != null) {
+            arrayList[size] = element;
+        }
         size++;
     }
 

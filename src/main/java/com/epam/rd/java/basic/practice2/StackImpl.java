@@ -6,10 +6,16 @@ import java.util.NoSuchElementException;
 public class StackImpl implements Stack {
 
     ArrayImpl stack = new ArrayImpl();
-
+    int size;
 
     StackImpl() {
+        this(0);
         new ArrayImpl(0);
+    }
+
+    StackImpl(int size) {
+        this.size = size;
+        new ArrayImpl(size);
     }
 
     @Override
