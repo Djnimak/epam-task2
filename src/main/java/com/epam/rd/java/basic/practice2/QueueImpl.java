@@ -8,6 +8,7 @@ public class QueueImpl implements Queue {
     ListImpl queue = new ListImpl();
 
     QueueImpl() {
+        new ListImpl(0);
     }
 
     @Override

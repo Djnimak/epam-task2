@@ -10,7 +10,7 @@ public class ArrayImpl implements Array {
     int capcaity;
 
     public ArrayImpl() {
-        this(5);
+        this(0);
     }
 
     public ArrayImpl(int capcaity) {
@@ -74,7 +74,6 @@ public class ArrayImpl implements Array {
         }
         arrayList = temp;
         capcaity += 1;
-        assert arrayList != null;
         arrayList[size] = element;
         size++;
     }

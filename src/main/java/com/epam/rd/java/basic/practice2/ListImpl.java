@@ -13,7 +13,7 @@ public class ListImpl implements List {
     int listSize;
 
     public ListImpl() {
-        this(5);
+        this(0);
     }
 
     public ListImpl(int listSize) {
@@ -79,7 +79,7 @@ public class ListImpl implements List {
                 throw new NoSuchElementException();
             } else {
                 this.lastReturned = this.next;
-                this.next = this.next.next;
+                this.next = next.next;
                 ++this.nextIndex;
                 return this.lastReturned.data;
             }

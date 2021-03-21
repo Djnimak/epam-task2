@@ -9,7 +9,7 @@ public class StackImpl implements Stack {
 
 
     StackImpl() {
-        new ArrayImpl();
+        new ArrayImpl(0);
     }
 
     @Override
