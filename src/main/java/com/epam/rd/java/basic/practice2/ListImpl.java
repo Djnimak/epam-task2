@@ -13,6 +13,7 @@ public class ListImpl implements List {
     int listSize;
 
     public ListImpl() {
+        this(5);
     }
 
     public ListImpl(int listSize) {

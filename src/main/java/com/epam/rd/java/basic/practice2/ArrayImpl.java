@@ -10,9 +10,7 @@ public class ArrayImpl implements Array {
     int capcaity;
 
     public ArrayImpl() {
-        capcaity = 0;
-        size = 0;
-        arrayList = new Object[capcaity];
+        this(5);
     }
 
     public ArrayImpl(int capcaity) {
