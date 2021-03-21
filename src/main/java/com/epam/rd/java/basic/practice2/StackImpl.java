@@ -7,6 +7,7 @@ public class StackImpl implements Stack {
 
     ArrayImpl stack = new ArrayImpl();
 
+
     StackImpl() {
         new ArrayImpl();
     }
@@ -35,12 +36,16 @@ public class StackImpl implements Stack {
 
         @Override
         public Object next() {
-            Object o = null;
-            for (int i = 0; i <= currentIndex; i++) {
-                o = stack.get(i);
+            if (!this.hasNext()) {
+                throw new NoSuchElementException();
+            } else {
+                Object o = null;
+                for (int i = 0; i <= currentIndex; i++) {
+                    o = stack.get(i);
+                }
+                currentIndex++;
+                return o;
             }
-            currentIndex++;
-            return o;
         }
 
         @Override

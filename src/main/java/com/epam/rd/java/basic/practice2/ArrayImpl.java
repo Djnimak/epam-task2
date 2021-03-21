@@ -11,6 +11,9 @@ public class ArrayImpl implements Array {
 
 
     ArrayImpl() {
+        capcaity = 0;
+        size = 0;
+        arrayList = new Object[capcaity];
     }
 
     ArrayImpl(int capcaity) {
@@ -46,12 +49,16 @@ public class ArrayImpl implements Array {
 
         @Override
         public Object next() {
-            Object o = null;
-            for (int i = 0; i <= currentIndex; i++) {
-                o = arrayList[i];
+            if (!this.hasNext()) {
+                throw new NoSuchElementException();
+            } else {
+                Object o = null;
+                for (int i = 0; i <= currentIndex; i++) {
+                    o = arrayList[i];
+                }
+                currentIndex++;
+                return o;
             }
-            currentIndex++;
-            return o;
         }
 
         @Override
@@ -70,6 +77,7 @@ public class ArrayImpl implements Array {
         }
         arrayList = temp;
         capcaity += 1;
+        assert arrayList != null;
         arrayList[size] = element;
         size++;
     }

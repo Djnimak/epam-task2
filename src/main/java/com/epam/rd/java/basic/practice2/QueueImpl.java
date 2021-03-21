@@ -8,10 +8,6 @@ public class QueueImpl implements Queue {
     ListImpl queue = new ListImpl();
 
 
-    public QueueImpl(ListImpl list) {
-        new ListImpl();
-    }
-
     public QueueImpl() {
     }
 
