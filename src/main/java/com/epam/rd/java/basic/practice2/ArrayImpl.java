@@ -15,6 +15,12 @@ public class ArrayImpl implements Array {
         capcaity = 1;
     }
 
+    ArrayImpl (int capcaity) {
+        this.capcaity = capcaity;
+        size = 0;
+        arrayList = new Object[capcaity];
+    }
+
     @Override
     public void clear() {
         for (int i = 0; i < arrayList.length; i++) {
@@ -59,9 +65,13 @@ public class ArrayImpl implements Array {
 
     @Override
     public void add(Object element) {
+        Object[] temp = null;
         if (size == capcaity) {
-            growSize();
+            temp = new Object[capcaity + 1];
+            if (capcaity >= 0) System.arraycopy(arrayList, 0, temp, 0, capcaity);
         }
+        arrayList = temp;
+        capcaity += 1;
         arrayList[size] = element;
         size++;
     }
@@ -127,7 +137,7 @@ public class ArrayImpl implements Array {
     }
 
     public static void main(String[] args) {
-        ArrayImpl array = new ArrayImpl();
+        ArrayImpl array = new ArrayImpl(4);
         ArrayImpl.IteratorImpl iter = array.new IteratorImpl();
         array.add('A');
         array.add('B');
