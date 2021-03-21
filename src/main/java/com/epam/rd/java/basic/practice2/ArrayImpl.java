@@ -6,16 +6,14 @@ import java.util.NoSuchElementException;
 public class ArrayImpl implements Array {
 
     private Object[] arrayList;
-    public int size;
-    public int capcaity;
+    int size;
+    private int capcaity;
+
 
     ArrayImpl() {
-        arrayList = new Object[1];
-        size = 0;
-        capcaity = 1;
     }
 
-    ArrayImpl (int capcaity) {
+    ArrayImpl(int capcaity) {
         this.capcaity = capcaity;
         size = 0;
         arrayList = new Object[capcaity];
@@ -39,7 +37,7 @@ public class ArrayImpl implements Array {
     }
 
     private class IteratorImpl implements Iterator<Object> {
-        public int currentIndex = 0;
+        private int currentIndex = 0;
 
         @Override
         public boolean hasNext() {
@@ -47,7 +45,7 @@ public class ArrayImpl implements Array {
         }
 
         @Override
-        public Object next() throws NoSuchElementException {
+        public Object next() {
             Object o = null;
             for (int i = 0; i <= currentIndex; i++) {
                 o = arrayList[i];
@@ -57,7 +55,7 @@ public class ArrayImpl implements Array {
         }
 
         @Override
-        public void remove() throws UnsupportedOperationException {
+        public void remove() {
             arrayList[currentIndex - 1] = null;
             currentIndex--;
         }
@@ -105,7 +103,7 @@ public class ArrayImpl implements Array {
     }
 
     @Override
-    public int indexOf(Object element){
+    public int indexOf(Object element) {
         int index = -1;
         for (int i = 0; i < arrayList.length; i++) {
             if (arrayList[i].equals(element)) {
@@ -128,9 +126,14 @@ public class ArrayImpl implements Array {
         StringBuilder s = new StringBuilder();
         s.append("[");
         for (int i = 0; i < arrayList.length; i++) {
-            if (arrayList[i] == null) {s.append("null");}
-            else {s.append(arrayList[i]);}
-            if (i != arrayList.length-1) {s.append(", ");}
+            if (arrayList[i] == null) {
+                s.append("null");
+            } else {
+                s.append(arrayList[i]);
+            }
+            if (i != arrayList.length - 1) {
+                s.append(", ");
+            }
         }
         s.append("]");
         return s.toString();
@@ -138,7 +141,7 @@ public class ArrayImpl implements Array {
 
     public static void main(String[] args) {
         ArrayImpl array = new ArrayImpl(4);
-        ArrayImpl.IteratorImpl iter = array.new IteratorImpl();
+        Iterator<Object> iter = array.iterator();
         array.add('A');
         array.add('B');
         array.add('C');

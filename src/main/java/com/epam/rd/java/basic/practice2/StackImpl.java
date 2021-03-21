@@ -34,7 +34,7 @@ public class StackImpl implements Stack {
         }
 
         @Override
-        public Object next() throws NoSuchElementException {
+        public Object next() {
             Object o = null;
             for (int i = 0; i <= currentIndex; i++) {
                 o = stack.get(i);
@@ -44,9 +44,8 @@ public class StackImpl implements Stack {
         }
 
         @Override
-        public void remove() throws UnsupportedOperationException {
-            Object o = stack.get(currentIndex - 1);
-            o = null;
+        public void remove() {
+            stack.get(currentIndex - 1);
             currentIndex--;
         }
 
@@ -77,7 +76,7 @@ public class StackImpl implements Stack {
 
     public static void main(String[] args) {
         StackImpl stack = new StackImpl();
-        IteratorImpl iter = stack.new IteratorImpl();
+        Iterator<Object> iter = stack.iterator();
         stack.push('A');
         stack.push('B');
         stack.push('C');

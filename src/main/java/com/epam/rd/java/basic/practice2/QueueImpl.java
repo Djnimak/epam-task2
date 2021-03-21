@@ -8,9 +8,13 @@ public class QueueImpl implements Queue {
     ListImpl queue = new ListImpl();
 
 
-    public QueueImpl() {
+    public QueueImpl(ListImpl list) {
         new ListImpl();
     }
+
+    public QueueImpl() {
+    }
+
 
     @Override
     public void clear() {
@@ -27,8 +31,8 @@ public class QueueImpl implements Queue {
     }
 
     private class IteratorImpl implements Iterator<Object> {
-        private ListImpl.Node<Object> lastReturned;
-        private ListImpl.Node<Object> next;
+        private ListImpl.Node lastReturned;
+        private ListImpl.Node next;
         private int nextIndex;
         ListImpl queue = new ListImpl();
 
@@ -54,7 +58,7 @@ public class QueueImpl implements Queue {
             if (this.lastReturned == null) {
                 throw new IllegalStateException();
             } else {
-                ListImpl.Node<Object> lastNext = this.lastReturned.next;
+                ListImpl.Node lastNext = this.lastReturned.next;
                 queue.unlink(this.lastReturned);
                 if (this.next == this.lastReturned) {
                     this.next = lastNext;
@@ -91,7 +95,7 @@ public class QueueImpl implements Queue {
 
     public static void main(String[] args) {
         QueueImpl queue = new QueueImpl();
-        QueueImpl.IteratorImpl iter = queue.new IteratorImpl();
+        Iterator<Object> iter = queue.iterator();
         queue.enqueue('A');
         queue.enqueue('B');
         queue.enqueue('C');
