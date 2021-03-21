@@ -1,21 +1,25 @@
 package com.epam.rd.java.basic.practice2;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class QueueImpl implements Queue {
 
+    ListImpl queue = new ListImpl();
+
+
     public QueueImpl() {
-        
+        new ListImpl();
     }
 
     @Override
     public void clear() {
-        
+        queue.clear();
     }
 
     @Override
     public int size() {
-        return 0;
+        return queue.size();
     }
 
     public Iterator<Object> iterator() {
@@ -23,40 +27,81 @@ public class QueueImpl implements Queue {
     }
 
     private class IteratorImpl implements Iterator<Object> {
+        private ListImpl.Node<Object> lastReturned;
+        private ListImpl.Node<Object> next;
+        private int nextIndex;
+        ListImpl queue = new ListImpl();
 
         @Override
         public boolean hasNext() {
-            return false;
+            return this.nextIndex < queue.listSize;
         }
 
         @Override
         public Object next() {
-            return null;
+            if (!this.hasNext()) {
+                throw new NoSuchElementException();
+            } else {
+                this.lastReturned = this.next;
+                this.next = this.next.next;
+                ++this.nextIndex;
+                return this.lastReturned.data;
+            }
+        }
+
+        @Override
+        public void remove() {
+            if (this.lastReturned == null) {
+                throw new IllegalStateException();
+            } else {
+                ListImpl.Node<Object> lastNext = this.lastReturned.next;
+                queue.unlink(this.lastReturned);
+                if (this.next == this.lastReturned) {
+                    this.next = lastNext;
+                } else {
+                    --this.nextIndex;
+                }
+                this.lastReturned = null;
+            }
         }
 
     }
 
     @Override
     public void enqueue(Object element) {
-        
+        queue.addLast(element);
     }
 
     @Override
     public Object dequeue() {
-        return null;
+        Object o = queue.getFirst();
+        queue.removeFirst();
+        return o;
     }
 
     @Override
     public Object top() {
-        return null;
+        return queue.getFirst();
     }
 
     @Override
     public String toString() {
-        return null;
+        return queue.toString();
     }
 
     public static void main(String[] args) {
+        QueueImpl queue = new QueueImpl();
+        QueueImpl.IteratorImpl iter = queue.new IteratorImpl();
+        queue.enqueue('A');
+        queue.enqueue('B');
+        queue.enqueue('C');
+        System.out.println(iter.hasNext());
+        System.out.println(queue);
+        System.out.println(queue.top());
+        System.out.println(queue.size());
+        System.out.println(queue.dequeue());
+        queue.clear();
+        System.out.println(queue);
 
     }
 
