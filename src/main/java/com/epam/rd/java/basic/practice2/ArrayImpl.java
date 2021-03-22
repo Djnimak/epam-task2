@@ -31,18 +31,8 @@ public class ArrayImpl implements Array {
 
     @Override
     public int size() {
-//        int count = 0;
-//        for (Object o : arrayList) {
-//            if (o != null) {
-//                count++;
-//            }
-//        }
         size = length;
         return size;
-    }
-
-    public void length() {
-        this.length = capcaity;
     }
 
     @Override
@@ -121,12 +111,6 @@ public class ArrayImpl implements Array {
     @Override
     public void set(int index, Object element) {
         arrayList[index] = element;
-//        if (size == capcaity) {
-//            growSize();
-//        }
-//        if (size - index >= 0) System.arraycopy(arrayList, index, arrayList, index + 1, size - index);
-//        arrayList[index] = element;
-//        size++;
     }
 
     @Override
@@ -210,27 +194,27 @@ public class ArrayImpl implements Array {
         System.out.println(array.size());
         System.out.println(array.capcaity);
         System.out.println(array.length);
-//        Iterator<Object> iter = array.iterator();
-//        System.out.println(array.indexOf('A'));
-//        System.out.println(array.get(1));
-//        array.set(2, 'D');
-//        System.out.println(array);
-//        array.remove(2);
-//        System.out.println(array);
-//        array.size();
-//        System.out.println(iter.hasNext());
-//        System.out.println(iter.next());
-//        System.out.println(iter.hasNext());
-//        System.out.println(iter.next());
-//        System.out.println(iter.hasNext());
-//        System.out.println(iter.next());
-//        System.out.println(iter.hasNext());
-//        System.out.println(iter.next());
-//        System.out.println(iter.hasNext());
-//        System.out.println(iter.next());
-//        System.out.println(iter.hasNext());
-//        System.out.println(iter.next());
-//        array.clear();
-//        System.out.println(array);
+        Iterator<Object> iter = array.iterator();
+        System.out.println(array.indexOf('A'));
+        System.out.println(array.get(1));
+        array.set(2, 'D');
+        System.out.println(array);
+        array.remove(2);
+        System.out.println(array);
+        array.size();
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        array.clear();
+        System.out.println(array);
     }
 }
