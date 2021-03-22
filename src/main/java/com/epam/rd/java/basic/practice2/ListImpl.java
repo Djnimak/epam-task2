@@ -65,17 +65,17 @@ public class ListImpl implements List {
     private class IteratorImpl implements Iterator<Object> {
 
         ListImpl.Node lastReturned;
-        ListImpl.Node next;
-        int nextIndex;
+        ListImpl.Node next = last;
+        int nextIndex = 0;
 
         @Override
         public boolean hasNext() {
-            return this.nextIndex < ListImpl.this.listSize;
+            return this.nextIndex < listSize;
         }
 
         @Override
         public Object next() {
-            if (!this.hasNext()) {
+            if (!hasNext()) {
                 throw new NoSuchElementException();
             } else {
                 if (this.next != null) {
@@ -164,10 +164,6 @@ public class ListImpl implements List {
 //    }
 
     void unlink(Node x) {
-        if (x == this.first) {
-
-        }
-
         ListImpl.Node next = x.next;
         ListImpl.Node prev = x.prev;
         if (prev == null) {

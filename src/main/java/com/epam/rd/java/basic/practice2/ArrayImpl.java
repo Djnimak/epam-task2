@@ -8,6 +8,7 @@ public class ArrayImpl implements Array {
     Object[] arrayList;
     int size;
     int capcaity;
+    int length = 0;
 
     public ArrayImpl() {
         this(0);
@@ -38,6 +39,10 @@ public class ArrayImpl implements Array {
         }
         size = count;
         return size;
+    }
+
+    public void length() {
+        this.length = capcaity;
     }
 
     @Override
@@ -84,10 +89,12 @@ public class ArrayImpl implements Array {
             temp[size()] = element;
             arrayList = temp;
             capcaity++;
+            length++;
         } else {
             if (size() == 0) {
                 arrayList[capcaity - 1] = element;
-            } else if (size() == capcaity) {
+                length++;
+            } else if (length == capcaity) {
                 growSize();
                 arrayList[capcaity - 1] = element;
             } else {
@@ -98,6 +105,7 @@ public class ArrayImpl implements Array {
                     }
                 }
                 this.arrayList[capcaity - 1] = element;
+                length++;
             }
         }
     }
@@ -107,6 +115,7 @@ public class ArrayImpl implements Array {
         System.arraycopy(arrayList, 0, temp, 0, capcaity);
         arrayList = temp;
         capcaity++;
+        length++;
     }
 
     @Override
@@ -170,7 +179,7 @@ public class ArrayImpl implements Array {
     }
 
     public static void main(String[] args) {
-        ArrayImpl array = new ArrayImpl(5);
+        ArrayImpl array = new ArrayImpl(2);
         System.out.println(array);
         System.out.println(array.size());
         System.out.println(array.capcaity);
