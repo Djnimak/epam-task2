@@ -40,16 +40,15 @@ public class ListImpl implements List {
 
     @Override
     public void clear() {
-        ListImpl.Node next;
-        for (ListImpl.Node x = this.first; x != null; x = next) {
-            next = x.next;
-            x.data = null;
-            x.prev = null;
-            x.next = null;
+        if (getFirst() != null) {
+            this.first = null;
         }
-
-        this.first = this.last = null;
-        this.listSize = 0;
+        if (getLast() != null) {
+            this.last = null;
+        }
+        if (listSize != 0) {
+            this.listSize = 0;
+        }
         ++this.modCount;
     }
 
@@ -79,8 +78,8 @@ public class ListImpl implements List {
                 throw new NoSuchElementException();
             } else {
                 if (this.next != null) {
-                this.lastReturned = this.next;
-                this.next = next.next;
+                    this.lastReturned = this.next;
+                    this.next = next.next;
                 }
                 ++this.nextIndex;
                 Object o = null;
@@ -127,8 +126,9 @@ public class ListImpl implements List {
         ListImpl.Node l = this.last;
         ListImpl.Node newNode = new ListImpl.Node(l, element, null);
         this.last = newNode;
-        if (l == null) {this.first = newNode;}
-        else {
+        if (l == null) {
+            this.first = newNode;
+        } else {
             l.next = newNode;
         }
         ++this.listSize;
@@ -208,7 +208,9 @@ public class ListImpl implements List {
         ListImpl.Node f = this.first;
         if (f != null) {
             return f.data;
-        } else {return this.last.data;}
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -217,7 +219,7 @@ public class ListImpl implements List {
         if (l != null) {
             return l.data;
         } else {
-            return this.first.data;
+            return null;
         }
     }
 
@@ -225,11 +227,11 @@ public class ListImpl implements List {
     public Object search(Object element) {
         ListImpl.Node x;
         Object e = null;
-            for (x = this.first; x != null; x = x.next) {
-                if (element.equals(x.data)) {
-                    e = x.data;
-                }
+        for (x = this.first; x != null; x = x.next) {
+            if (element.equals(x.data)) {
+                e = x.data;
             }
+        }
         return e;
     }
 
@@ -290,8 +292,8 @@ public class ListImpl implements List {
         System.out.println(list.search('B'));
         System.out.println(list.size());
         list.addFirst('A');
-        list.remove('A');
         System.out.println(list);
         list.clear();
+        System.out.println(list);
     }
 }
