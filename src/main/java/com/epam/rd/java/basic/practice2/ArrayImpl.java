@@ -109,11 +109,9 @@ public class ArrayImpl implements Array {
         if (index < 0 || index > size()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
-        Object o = null;
         if (arrayList[index] != null) {
-            o = arrayList[index];
-        }
-        return o;
+            return arrayList[index];
+        } else {return null;}
     }
 
     @Override

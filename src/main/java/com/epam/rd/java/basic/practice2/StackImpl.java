@@ -8,11 +8,11 @@ public class StackImpl implements Stack {
     ArrayImpl stack = new ArrayImpl();
     int size;
 
-    StackImpl() {
+    public StackImpl() {
         this(0);
     }
 
-    StackImpl(int size) {
+    public StackImpl(int size) {
         this.size = size;
         new ArrayImpl(size);
     }

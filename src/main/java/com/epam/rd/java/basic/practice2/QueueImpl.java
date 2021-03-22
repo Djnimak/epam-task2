@@ -8,7 +8,7 @@ public class QueueImpl implements Queue {
     ListImpl queue = new ListImpl();
     int size;
 
-    QueueImpl() {
+    public QueueImpl() {
         this(0);
     }
 
