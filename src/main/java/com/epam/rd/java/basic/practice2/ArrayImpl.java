@@ -15,7 +15,6 @@ public class ArrayImpl implements Array {
 
     public ArrayImpl(int capcaity) {
         this.capcaity = capcaity;
-        size = 0;
         arrayList = new Object[capcaity];
     }
 
@@ -31,11 +30,13 @@ public class ArrayImpl implements Array {
 
     @Override
     public int size() {
-        if (this.capcaity != 0) {
-            size = capcaity-1;
-        } else {
-            size = 0;
+        int count = 0;
+        for (Object o : arrayList) {
+            if (o != null) {
+                count++;
+            }
         }
+        size = count;
         return size;
     }
 
@@ -49,23 +50,24 @@ public class ArrayImpl implements Array {
 
         @Override
         public boolean hasNext() {
-            if (arrayList[currentIndex] == null) {
-                throw new NullPointerException();
-            } else {return currentIndex < size && arrayList[currentIndex] != null;}
+            if (currentIndex < capcaity) {
+                return arrayList[currentIndex] != null;
+            } else {
+                return false;
+            }
         }
 
         @Override
         public Object next() {
-            if (!this.hasNext()) {
-                throw new NoSuchElementException();
-            } else {
-                Object o = null;
-                for (int i = 0; i <= currentIndex; i++) {
-                    o = arrayList[i];
-                }
-                currentIndex++;
-                return o;
+//            for (int i = currentIndex; i < capcaity-1; i++) {
+//                if ()
+//            }
+            Object o = null;
+            if (this.hasNext()) {
+                o = arrayList[currentIndex];
             }
+            currentIndex++;
+            return o;
         }
 
         @Override
@@ -77,51 +79,61 @@ public class ArrayImpl implements Array {
 
     @Override
     public void add(Object element) {
-        Object[] temp = null;
-        if (size() == 0) {
-            temp = new Object[capcaity + 2];
-            if (capcaity >= 0) System.arraycopy(arrayList, 0, temp, 0, capcaity);
+        Object[] temp;
+        if (capcaity == 0) {
+            temp = new Object[capcaity + 1];
+            temp[size()] = element;
+            arrayList = temp;
+            capcaity++;
+        } else {
+            if (size() == 0) {
+                arrayList[capcaity - 1] = element;
+            } else if (size() == capcaity) {
+                growSize();
+                arrayList[capcaity - 1] = element;
+            } else {
+                for (int i = 1; i < capcaity; i++) {
+                    if (arrayList[i] != null) {
+                        arrayList[i - 1] = this.arrayList[i];
+                    }
+                }
+                this.arrayList[capcaity - 1] = element;
+            }
         }
-        arrayList = temp;
-        capcaity += 2;
-        if (arrayList != null) {
-            arrayList[size()] = element;
-        }
-        size++;
     }
 
     public void growSize() {
-        Object[] temp = null;
-        if (size == capcaity) {
-            temp = new Object[capcaity + 1];
-            if (capcaity >= 0) System.arraycopy(arrayList, 0, temp, 0, capcaity);
-        }
+        Object[] temp = new Object[capcaity + 1];
+        System.arraycopy(arrayList, 0, temp, 0, capcaity);
         arrayList = temp;
-        capcaity += 1;
+        capcaity++;
     }
 
     @Override
     public void set(int index, Object element) {
-        if (size == capcaity) {
-            growSize();
-        }
-        if (size - index >= 0) System.arraycopy(arrayList, index, arrayList, index + 1, size - index);
         arrayList[index] = element;
-        size++;
+//        if (size == capcaity) {
+//            growSize();
+//        }
+//        if (size - index >= 0) System.arraycopy(arrayList, index, arrayList, index + 1, size - index);
+//        arrayList[index] = element;
+//        size++;
     }
 
     @Override
     public Object get(int index) {
         if ((index < 0 || index > size()) && arrayList[index] != null) {
             return arrayList[index];
-        } else {return null;}
+        } else {
+            return null;
+        }
     }
 
     @Override
     public int indexOf(Object element) {
         int index = -1;
-        for (int i = 0; i < arrayList.length; i++) {
-            if (arrayList[i].equals(element)) {
+        for (int i = 0; i < capcaity - 1; i++) {
+            if (arrayList[i] != null && arrayList[i].equals(element)) {
                 index = i;
             }
         }
@@ -158,19 +170,44 @@ public class ArrayImpl implements Array {
     }
 
     public static void main(String[] args) {
-        ArrayImpl array = new ArrayImpl(4);
-        Iterator<Object> iter = array.iterator();
+        ArrayImpl array = new ArrayImpl(5);
+        System.out.println(array);
+        System.out.println(array.size());
+        System.out.println(array.capcaity);
         array.add('A');
+        System.out.println(array);
+        System.out.println(array.size());
+        System.out.println(array.capcaity);
         array.add('B');
+        System.out.println(array);
+        System.out.println(array.size());
+        System.out.println(array.capcaity);
+        System.out.println("-------");
         array.add('C');
+        System.out.println(array);
+        System.out.println(array.size());
+        System.out.println(array.capcaity);
+        Iterator<Object> iter = array.iterator();
         System.out.println(array.indexOf('A'));
         System.out.println(array.get(1));
         array.set(2, 'D');
+        System.out.println(array);
         array.remove(2);
         System.out.println(array);
         array.size();
         System.out.println(iter.hasNext());
         System.out.println(iter.next());
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
         array.clear();
+        System.out.println(array);
     }
 }
