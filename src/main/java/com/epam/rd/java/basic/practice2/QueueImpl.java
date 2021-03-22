@@ -19,7 +19,9 @@ public class QueueImpl implements Queue {
 
     @Override
     public void clear() {
-        queue.clear();
+        if (queue.listSize != 0) {
+            queue.clear();
+        } else {throw new NoSuchElementException();}
     }
 
     @Override
@@ -79,9 +81,13 @@ public class QueueImpl implements Queue {
 
     @Override
     public Object dequeue() {
-        Object o = queue.getFirst();
-        queue.removeFirst();
-        return o;
+        Object o;
+        if (queue.getFirst() != null) {
+            o = queue.getFirst();
+            queue.removeFirst();
+            return o;
+        }
+        return this;
     }
 
     @Override

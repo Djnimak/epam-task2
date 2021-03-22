@@ -106,10 +106,7 @@ public class ArrayImpl implements Array {
 
     @Override
     public Object get(int index) {
-        if (index < 0 || index > size()) {
-            throw new IndexOutOfBoundsException("Out of bounds");
-        }
-        if (arrayList[index] != null) {
+        if ((index < 0 || index > size()) && arrayList[index] != null) {
             return arrayList[index];
         } else {return null;}
     }
