@@ -21,7 +21,9 @@ public class QueueImpl implements Queue {
     public void clear() {
         if (queue.listSize != 0) {
             queue.clear();
-        } else {throw new NoSuchElementException();}
+        } else {
+            throw new NoSuchElementException();
+        }
     }
 
     @Override

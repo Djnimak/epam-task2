@@ -135,34 +135,6 @@ public class ListImpl implements List {
         ++this.modCount;
     }
 
-//    public void unlinkFirst(Node f) {
-//        ListImpl.Node next = f.next;
-//        f.data = null;
-//        f.next = null;
-//        this.first = next;
-//        if (next == null) {
-//            this.last = null;
-//        } else {
-//            next.prev = null;
-//        }
-//        --this.listSize;
-//        ++this.modCount;
-//    }
-//
-//    public void unlinkLast(Node l) {
-//        ListImpl.Node prev = l.prev;
-//        l.data = null;
-//        l.prev = null;
-//        this.last = prev;
-//        if (prev == null) {
-//            this.first = null;
-//        } else {
-//            prev.next = null;
-//        }
-//        --this.listSize;
-//        ++this.modCount;
-//    }
-
     void unlink(Node x) {
         ListImpl.Node next = x.next;
         ListImpl.Node prev = x.prev;
