@@ -31,13 +31,13 @@ public class ArrayImpl implements Array {
 
     @Override
     public int size() {
-        int count = 0;
-        for (Object o : arrayList) {
-            if (o != null) {
-                count++;
-            }
-        }
-        size = count;
+//        int count = 0;
+//        for (Object o : arrayList) {
+//            if (o != null) {
+//                count++;
+//            }
+//        }
+        size = length;
         return size;
     }
 
@@ -183,27 +183,33 @@ public class ArrayImpl implements Array {
         System.out.println(array);
         System.out.println(array.size());
         System.out.println(array.capcaity);
+        System.out.println(array.length);
         array.add('A');
         System.out.println(array);
         System.out.println(array.size());
         System.out.println(array.capcaity);
+        System.out.println(array.length);
         array.add('B');
         System.out.println(array);
         System.out.println(array.size());
         System.out.println(array.capcaity);
+        System.out.println(array.length);
         System.out.println("-------");
         array.add('C');
         System.out.println(array);
         System.out.println(array.size());
         System.out.println(array.capcaity);
+        System.out.println(array.length);
         array.add(null);
         System.out.println(array);
         System.out.println(array.size());
         System.out.println(array.capcaity);
+        System.out.println(array.length);
         array.add('D');
         System.out.println(array);
         System.out.println(array.size());
         System.out.println(array.capcaity);
+        System.out.println(array.length);
 //        Iterator<Object> iter = array.iterator();
 //        System.out.println(array.indexOf('A'));
 //        System.out.println(array.get(1));
