@@ -26,10 +26,16 @@ public class ArrayImpl implements Array {
                 arrayList[i] = null;
             }
         }
+        size = 0;
     }
 
     @Override
     public int size() {
+        if (this.capcaity != 0) {
+            size = capcaity-1;
+        } else {
+            size = 0;
+        }
         return size;
     }
 
@@ -72,14 +78,14 @@ public class ArrayImpl implements Array {
     @Override
     public void add(Object element) {
         Object[] temp = null;
-        if (size == capcaity) {
-            temp = new Object[capcaity + 1];
+        if (size() == 0) {
+            temp = new Object[capcaity + 2];
             if (capcaity >= 0) System.arraycopy(arrayList, 0, temp, 0, capcaity);
         }
         arrayList = temp;
-        capcaity += 1;
+        capcaity += 2;
         if (arrayList != null) {
-            arrayList[size] = element;
+            arrayList[size()] = element;
         }
         size++;
     }
@@ -130,6 +136,7 @@ public class ArrayImpl implements Array {
         if (arrayList[index] != null) {
             arrayList[index] = null;
         }
+        size--;
     }
 
     @Override

@@ -164,12 +164,16 @@ public class ListImpl implements List {
 //    }
 
     void unlink(Node x) {
+        if (x == this.first) {
+
+        }
+
         ListImpl.Node next = x.next;
         ListImpl.Node prev = x.prev;
         if (prev == null) {
             this.first = next;
         } else {
-            prev.next = next;
+            this.last = next;
             x.prev = null;
         }
         if (next == null) {
@@ -196,29 +200,28 @@ public class ListImpl implements List {
     @Override
     public void removeLast() {
         ListImpl.Node l = this.last;
-        if (l == null) {
-            throw new NoSuchElementException();
-        } else {
+        if (l != null) {
             this.unlink(l);
+        } else {
+            this.unlink(this.first);
         }
     }
 
     @Override
     public Object getFirst() {
-        ListImpl.Node f;
-        if (this.first == null) {
-            throw new NoSuchElementException();
-        } else {f = this.first;}
-        return f.data;
+        ListImpl.Node f = this.first;
+        if (f != null) {
+            return f.data;
+        } else {return this.last.data;}
     }
 
     @Override
     public Object getLast() {
-        ListImpl.Node l = this.first;
-        if (l == null) {
-            return null;
-        } else {
+        ListImpl.Node l = this.last;
+        if (l != null) {
             return l.data;
+        } else {
+            return this.first.data;
         }
     }
 

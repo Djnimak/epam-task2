@@ -82,7 +82,7 @@ public class QueueImpl implements Queue {
     @Override
     public Object dequeue() {
         Object o;
-        if (queue.getFirst() != null) {
+        if (queue.getFirst() != null && queue.getLast() != null) {
             o = queue.getFirst();
             queue.removeFirst();
             return o;
