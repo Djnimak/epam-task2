@@ -5,21 +5,23 @@ import java.util.NoSuchElementException;
 
 public class StackImpl implements Stack {
 
-    ArrayImpl stack = new ArrayImpl();
+    ArrayImpl stack;
     int capacity;
 
     public StackImpl() {
         this(0);
+        stack = new ArrayImpl(0);
     }
 
     public StackImpl(int capacity) {
         this.capacity = capacity;
-        new ArrayImpl(capacity);
+        stack = new ArrayImpl(capacity);
     }
 
     @Override
     public void clear() {
         stack = new ArrayImpl(0);
+        capacity = 0;
     }
 
     @Override
@@ -32,15 +34,12 @@ public class StackImpl implements Stack {
     }
 
     private class IteratorImpl implements Iterator<Object> {
-        private int currentIndex = 0;
+        ArrayImpl copy = stack;
+        int currentIndex = copy.length-1;
 
         @Override
         public boolean hasNext() {
-            if (currentIndex == 0) {
-                return currentIndex < capacity && stack.get(currentIndex) != null;
-            } else {
-                return currentIndex < capacity;
-            }
+            return currentIndex >= 0;
         }
 
         @Override
@@ -51,7 +50,7 @@ public class StackImpl implements Stack {
             } else {
                 o = stack.get(currentIndex);
             }
-            currentIndex++;
+            currentIndex--;
             return o;
         }
 
@@ -66,6 +65,7 @@ public class StackImpl implements Stack {
     @Override
     public void push(Object element) {
         stack.add(element);
+        capacity++;
 
     }
 
@@ -77,6 +77,7 @@ public class StackImpl implements Stack {
         } else {
             o = stack.get(stack.size() - 1);
             stack.remove(stack.size() - 1);
+            capacity--;
         }
         return o;
     }
@@ -97,18 +98,20 @@ public class StackImpl implements Stack {
 
     public static void main(String[] args) {
         StackImpl stack = new StackImpl();
-        Iterator<Object> iter = stack.iterator();
         stack.push('A');
+        System.out.println(stack.capacity);
         stack.push('B');
+        System.out.println(stack.capacity);
         stack.push('C');
+        System.out.println(stack.capacity);
+        stack.push(null);
         System.out.println(stack);
-        System.out.println(iter.hasNext());
-        System.out.println(iter.next());
-        System.out.println(iter.hasNext());
-        System.out.println(iter.next());
-        System.out.println(iter.hasNext());
-        System.out.println(iter.next());
-        System.out.println(iter.hasNext());
+        System.out.println(stack.capacity);
+        Iterator<Object> iter = stack.iterator();
+        while (iter.hasNext()) {
+            System.out.print(iter.next());
+        }
+        System.out.println();
         System.out.println(stack.size());
         System.out.println(stack.top());
         System.out.println(stack.pop());

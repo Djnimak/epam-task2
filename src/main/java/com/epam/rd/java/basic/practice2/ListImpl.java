@@ -212,10 +212,12 @@ public class ListImpl implements List {
                 --this.listSize;
                 return true;
             }
-            if (cur != null) {
+            if (cur != null && cur.data.equals(element)) {
                 prev.next = cur.next;
                 --this.listSize;
                 return true;
+            } else {
+                return false;
             }
         }
         ++this.modCount;
@@ -243,8 +245,20 @@ public class ListImpl implements List {
         ListImpl list = new ListImpl();
         list.addFirst('A');
         list.addLast('B');
+        list.addLast(null);
         list.addLast('C');
         list.addLast(null);
+        System.out.println(list);
+        System.out.println(list.search('C'));
+        System.out.println(list.remove('C'));
+        System.out.println(list.search('C'));
+        System.out.println(list);
+        System.out.println(list.remove('A'));
+        System.out.println(list);
+        System.out.println(list.remove('C'));
+        System.out.println(list);
+        System.out.println(list.remove('A'));
+        System.out.println(list);
         Iterator<Object> iter = list.iterator();
         System.out.println(list.size());
         System.out.println(list);

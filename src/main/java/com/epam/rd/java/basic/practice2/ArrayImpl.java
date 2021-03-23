@@ -21,9 +21,9 @@ public class ArrayImpl implements Array {
 
     @Override
     public void clear() {
-            arrayList = new Object[0];
-            capcaity = 0;
-            length = 0;
+        arrayList = new Object[0];
+        capcaity = 0;
+        length = 0;
     }
 
     @Override
@@ -77,11 +77,8 @@ public class ArrayImpl implements Array {
             arrayList = temp;
             capcaity++;
         } else {
-            if (size() == 0) {
-                arrayList[capcaity - 1] = element;
-            } else if (length == capcaity) {
+            if (length == capcaity) {
                 growSize();
-                arrayList[capcaity - 1] = element;
             } else {
                 for (int i = 1; i < capcaity; i++) {
                     if (arrayList[i] != null) {
@@ -89,8 +86,8 @@ public class ArrayImpl implements Array {
                         arrayList[i] = null;
                     }
                 }
-                this.arrayList[capcaity - 1] = element;
             }
+            arrayList[capcaity - 1] = element;
         }
         length++;
     }
@@ -137,12 +134,12 @@ public class ArrayImpl implements Array {
         if (index < 0 || index > size()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
-            temp = new Object[capcaity-1];
-            System.arraycopy(arrayList, 0, temp, 0, index);
-            if (index != length-1) {
-                System.arraycopy(arrayList, index + 1, temp, index, (capcaity - index)-1);
-            }
-            arrayList = temp;
+        temp = new Object[capcaity - 1];
+        System.arraycopy(arrayList, 0, temp, 0, index);
+        if (index != length - 1) {
+            System.arraycopy(arrayList, index + 1, temp, index, (capcaity - index) - 1);
+        }
+        arrayList = temp;
         length--;
         capcaity--;
     }

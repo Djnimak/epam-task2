@@ -5,11 +5,11 @@ import java.util.NoSuchElementException;
 
 public class QueueImpl implements Queue {
 
-    ListImpl queue = new ListImpl();
+    ListImpl queue;
     int size;
 
     public QueueImpl() {
-        this(0);
+        queue = new ListImpl(0);
     }
 
     public QueueImpl(int size) {
@@ -40,7 +40,7 @@ public class QueueImpl implements Queue {
         ListImpl.Node next;
         ListImpl.Node current;
         int nextIndex;
-        ListImpl queue = new ListImpl();
+        ListImpl copy = queue;
 
         private IteratorImpl() {
             current = queue.first;
@@ -49,7 +49,7 @@ public class QueueImpl implements Queue {
 
         @Override
         public boolean hasNext() {
-            return this.nextIndex < queue.listSize;
+            return this.nextIndex < size;
         }
 
         @Override
@@ -58,14 +58,10 @@ public class QueueImpl implements Queue {
             if (!this.hasNext()) {
                 throw new NoSuchElementException();
             } else {
-                data = current.data;
-                current = current.next;
+                data = copy.getFirst();
+                copy.removeFirst();
                 nextIndex++;
                 return data;
-//                this.lastReturned = this.next;
-//                this.next = this.next.next;
-//                ++this.nextIndex;
-//                return this.lastReturned.data;
             }
         }
 
@@ -90,12 +86,14 @@ public class QueueImpl implements Queue {
     @Override
     public void enqueue(Object element) {
         queue.addLast(element);
+        size++;
     }
 
     @Override
     public Object dequeue() {
         Object o = queue.getFirst();
         queue.removeFirst();
+        size--;
         return o;
     }
 
@@ -115,13 +113,21 @@ public class QueueImpl implements Queue {
         queue.enqueue('A');
         queue.enqueue('B');
         queue.enqueue('C');
-        System.out.println(iter.hasNext());
+        queue.enqueue(null);
+        while (iter.hasNext()) {
+            System.out.print(iter.next());
+        }
         System.out.println(queue);
-        System.out.println(queue.top());
-        System.out.println(queue.size());
-        System.out.println(queue.dequeue());
-        queue.clear();
-        System.out.println(queue);
+//        System.out.println(iter.hasNext());
+        System.out.println(queue.size);
+//        System.out.println(iter.next());
+//        System.out.println(iter.hasNext());
+//        System.out.println(iter.next());
+//        System.out.println(queue.top());
+//        System.out.println(queue.size());
+//        System.out.println(queue.dequeue());
+//        queue.clear();
+//        System.out.println(queue);
 
     }
 
