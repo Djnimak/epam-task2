@@ -19,7 +19,7 @@ public class StackImpl implements Stack {
 
     @Override
     public void clear() {
-        stack.clear();
+        stack = new ArrayImpl(0);
     }
 
     @Override

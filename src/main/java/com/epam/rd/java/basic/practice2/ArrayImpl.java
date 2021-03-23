@@ -21,12 +21,9 @@ public class ArrayImpl implements Array {
 
     @Override
     public void clear() {
-        for (int i = 0; i < arrayList.length; i++) {
-            if (arrayList[i] != null) {
-                arrayList[i] = null;
-            }
-        }
-        size = 0;
+            arrayList = new Object[0];
+            capcaity = 0;
+            length = 0;
     }
 
     @Override
@@ -45,11 +42,7 @@ public class ArrayImpl implements Array {
 
         @Override
         public boolean hasNext() {
-            if (currentIndex < capcaity) {
-                return arrayList[currentIndex] != null;
-            } else {
-                return false;
-            }
+            return currentIndex < capcaity && arrayList[currentIndex] != null;
         }
 
         @Override
@@ -115,10 +108,14 @@ public class ArrayImpl implements Array {
 
     @Override
     public Object get(int index) {
-        if ((index < 0 || index > size()) && arrayList[index] != null) {
-            return arrayList[index];
+        if ((index < 0 || index >= size())) {
+            throw new IndexOutOfBoundsException("Out of bounds");
         } else {
-            return null;
+            if (arrayList[index] != null) {
+                return arrayList[index];
+            } else {
+                return null;
+            }
         }
     }
 
@@ -135,13 +132,26 @@ public class ArrayImpl implements Array {
 
     @Override
     public void remove(int index) {
+        Object[] temp;
         if (index < 0 || index > size()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
         if (arrayList[index] != null) {
             arrayList[index] = null;
-        }
-        size--;
+        } else {
+            if (index == length-1) {
+                temp = new Object[capcaity-1];
+                System.arraycopy(arrayList, 0, temp, 0, index);
+                arrayList = temp;
+            } else {
+                temp = new Object[capcaity - 1];
+                System.arraycopy(arrayList, 0, temp, 0, index);
+                System.arraycopy(arrayList, index + 1, temp, index, (capcaity - index)-1);
+                arrayList = temp;
+            }
+            }
+        length--;
+        capcaity--;
     }
 
     @Override
@@ -163,7 +173,7 @@ public class ArrayImpl implements Array {
     }
 
     public static void main(String[] args) {
-        ArrayImpl array = new ArrayImpl(2);
+        ArrayImpl array = new ArrayImpl(0);
         System.out.println(array);
         System.out.println(array.size());
         System.out.println(array.capcaity);
@@ -189,32 +199,10 @@ public class ArrayImpl implements Array {
         System.out.println(array.size());
         System.out.println(array.capcaity);
         System.out.println(array.length);
-        array.add('D');
-        System.out.println(array);
-        System.out.println(array.size());
-        System.out.println(array.capcaity);
-        System.out.println(array.length);
-        Iterator<Object> iter = array.iterator();
-        System.out.println(array.indexOf('A'));
         System.out.println(array.get(1));
-        array.set(2, 'D');
-        System.out.println(array);
-        array.remove(2);
-        System.out.println(array);
-        array.size();
-        System.out.println(iter.hasNext());
-        System.out.println(iter.next());
-        System.out.println(iter.hasNext());
-        System.out.println(iter.next());
-        System.out.println(iter.hasNext());
-        System.out.println(iter.next());
-        System.out.println(iter.hasNext());
-        System.out.println(iter.next());
-        System.out.println(iter.hasNext());
-        System.out.println(iter.next());
-        System.out.println(iter.hasNext());
-        System.out.println(iter.next());
-        array.clear();
-        System.out.println(array);
+        Iterator<Object> iter = array.iterator();
+        while (iter.hasNext()) {
+            System.out.print(iter.next());
+        }
     }
 }
