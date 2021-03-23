@@ -42,7 +42,11 @@ public class ArrayImpl implements Array {
 
         @Override
         public boolean hasNext() {
-            return currentIndex < capcaity && arrayList[currentIndex] != null;
+            if (currentIndex == 0) {
+                return currentIndex < capcaity && arrayList[currentIndex] != null;
+            } else {
+                return currentIndex < capcaity;
+            }
         }
 
         @Override
@@ -72,11 +76,9 @@ public class ArrayImpl implements Array {
             temp[size()] = element;
             arrayList = temp;
             capcaity++;
-            length++;
         } else {
             if (size() == 0) {
                 arrayList[capcaity - 1] = element;
-                length++;
             } else if (length == capcaity) {
                 growSize();
                 arrayList[capcaity - 1] = element;
@@ -88,9 +90,9 @@ public class ArrayImpl implements Array {
                     }
                 }
                 this.arrayList[capcaity - 1] = element;
-                length++;
             }
         }
+        length++;
     }
 
     public void growSize() {
@@ -98,7 +100,6 @@ public class ArrayImpl implements Array {
         System.arraycopy(arrayList, 0, temp, 0, capcaity);
         arrayList = temp;
         capcaity++;
-        length++;
     }
 
     @Override
@@ -156,8 +157,7 @@ public class ArrayImpl implements Array {
 
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder();
-        s.append("[");
+        StringBuilder s = new StringBuilder("[");
         for (int i = 0; i < arrayList.length; i++) {
             if (arrayList[i] == null) {
                 s.append("null");
@@ -183,7 +183,7 @@ public class ArrayImpl implements Array {
         System.out.println(array.size());
         System.out.println(array.capcaity);
         System.out.println(array.length);
-        array.add('B');
+        array.add(null);
         System.out.println(array);
         System.out.println(array.size());
         System.out.println(array.capcaity);
@@ -204,5 +204,11 @@ public class ArrayImpl implements Array {
         while (iter.hasNext()) {
             System.out.print(iter.next());
         }
+        array.remove(1);
+        System.out.println(array);
+        System.out.println(array.size());
+        System.out.println(array.capcaity);
+        System.out.println(array.length);
+        System.out.println(array.get(1));
     }
 }

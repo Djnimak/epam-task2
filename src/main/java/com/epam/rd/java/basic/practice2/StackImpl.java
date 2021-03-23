@@ -69,14 +69,23 @@ public class StackImpl implements Stack {
 
     @Override
     public Object pop() {
-        Object o = stack.get(stack.size() - 1);
-        stack.remove(stack.size() - 1);
+        Object o;
+        if ((stack.size() - 1) < 0) {
+            o = null;
+        } else {
+            o = stack.get(stack.size() - 1);
+            stack.remove(stack.size() - 1);
+        }
         return o;
     }
 
     @Override
     public Object top() {
-        return stack.get(stack.size() - 1);
+        if ((stack.size() - 1) < 0) {
+            return null;
+        } else {
+            return stack.get(stack.size() - 1);
+        }
     }
 
     @Override
