@@ -36,10 +36,16 @@ public class QueueImpl implements Queue {
     }
 
     private class IteratorImpl implements Iterator<Object> {
-        private ListImpl.Node lastReturned;
-        private ListImpl.Node next;
-        private int nextIndex;
+        ListImpl.Node lastReturned;
+        ListImpl.Node next;
+        ListImpl.Node current;
+        int nextIndex;
         ListImpl queue = new ListImpl();
+
+        private IteratorImpl() {
+            current = queue.first;
+            next = queue.last;
+        }
 
         @Override
         public boolean hasNext() {
@@ -48,13 +54,18 @@ public class QueueImpl implements Queue {
 
         @Override
         public Object next() {
+            Object data;
             if (!this.hasNext()) {
                 throw new NoSuchElementException();
             } else {
-                this.lastReturned = this.next;
-                this.next = this.next.next;
-                ++this.nextIndex;
-                return this.lastReturned.data;
+                data = current.data;
+                current = current.next;
+                nextIndex++;
+                return data;
+//                this.lastReturned = this.next;
+//                this.next = this.next.next;
+//                ++this.nextIndex;
+//                return this.lastReturned.data;
             }
         }
 
@@ -64,7 +75,7 @@ public class QueueImpl implements Queue {
                 throw new IllegalStateException();
             } else {
                 ListImpl.Node lastNext = this.lastReturned.next;
-                queue.unlink(this.lastReturned);
+                queue.remove(this.lastReturned);
                 if (this.next == this.lastReturned) {
                     this.next = lastNext;
                 } else {

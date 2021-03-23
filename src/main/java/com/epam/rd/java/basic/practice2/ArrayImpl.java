@@ -137,20 +137,12 @@ public class ArrayImpl implements Array {
         if (index < 0 || index > size()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
-        if (arrayList[index] != null) {
-            arrayList[index] = null;
-        } else {
-            if (index == length-1) {
-                temp = new Object[capcaity-1];
-                System.arraycopy(arrayList, 0, temp, 0, index);
-                arrayList = temp;
-            } else {
-                temp = new Object[capcaity - 1];
-                System.arraycopy(arrayList, 0, temp, 0, index);
+            temp = new Object[capcaity-1];
+            System.arraycopy(arrayList, 0, temp, 0, index);
+            if (index != length-1) {
                 System.arraycopy(arrayList, index + 1, temp, index, (capcaity - index)-1);
-                arrayList = temp;
             }
-            }
+            arrayList = temp;
         length--;
         capcaity--;
     }

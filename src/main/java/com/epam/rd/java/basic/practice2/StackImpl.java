@@ -36,26 +36,28 @@ public class StackImpl implements Stack {
 
         @Override
         public boolean hasNext() {
-            return currentIndex < stack.size && stack.get(currentIndex) != null;
-        }
-
-        @Override
-        public Object next() {
-            if (!this.hasNext()) {
-                throw new NoSuchElementException();
+            if (currentIndex == 0) {
+                return currentIndex < capacity && stack.get(currentIndex) != null;
             } else {
-                Object o = null;
-                for (int i = 0; i <= currentIndex; i++) {
-                    o = stack.get(i);
-                }
-                currentIndex++;
-                return o;
+                return currentIndex < capacity;
             }
         }
 
         @Override
+        public Object next() {
+            Object o;
+            if (!this.hasNext()) {
+                throw new NoSuchElementException();
+            } else {
+                o = stack.get(currentIndex);
+            }
+            currentIndex++;
+            return o;
+        }
+
+        @Override
         public void remove() {
-            stack.get(currentIndex - 1);
+            stack.remove(currentIndex - 1);
             currentIndex--;
         }
 

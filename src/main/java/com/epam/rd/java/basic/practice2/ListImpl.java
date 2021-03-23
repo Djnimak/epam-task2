@@ -8,8 +8,8 @@ public class ListImpl implements List {
 
     protected int modCount = 0;
 
-    private ListImpl.Node first;
-    private ListImpl.Node last;
+    ListImpl.Node first;
+    ListImpl.Node last;
     int listSize;
 
     public ListImpl() {
