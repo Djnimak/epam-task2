@@ -63,6 +63,8 @@ public class ArrayImpl implements Array {
 
         @Override
         public void remove() {
+            arrayList[currentIndex - 1] = null;
+            currentIndex--;
         }
     }
 
@@ -166,36 +168,13 @@ public class ArrayImpl implements Array {
         System.out.println(array.capcaity);
         System.out.println(array.lengthAr);
         array.add('A');
-        System.out.println(array);
-        System.out.println(array.size());
-        System.out.println(array.capcaity);
-        System.out.println(array.lengthAr);
         array.add(null);
-        System.out.println(array);
-        System.out.println(array.size());
-        System.out.println(array.capcaity);
-        System.out.println(array.lengthAr);
-        System.out.println("-------");
         array.add('C');
-        System.out.println(array);
-        System.out.println(array.size());
-        System.out.println(array.capcaity);
-        System.out.println(array.lengthAr);
         array.add(null);
-        System.out.println(array);
-        System.out.println(array.size());
-        System.out.println(array.capcaity);
-        System.out.println(array.lengthAr);
-        System.out.println(array.get(1));
         Iterator<Object> iter = array.iterator();
         while (iter.hasNext()) {
             System.out.print(iter.next());
         }
         array.remove(1);
-        System.out.println(array);
-        System.out.println(array.size());
-        System.out.println(array.capcaity);
-        System.out.println(array.lengthAr);
-        System.out.println(array.get(1));
     }
 }
