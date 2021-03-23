@@ -35,7 +35,7 @@ public class StackImpl implements Stack {
 
     private class IteratorImpl implements Iterator<Object> {
         ArrayImpl copy = stack;
-        int currentIndex = copy.length-1;
+        int currentIndex = copy.lengthAr-1;
 
         @Override
         public boolean hasNext() {
@@ -66,7 +66,6 @@ public class StackImpl implements Stack {
     public void push(Object element) {
         stack.add(element);
         capacity++;
-
     }
 
     @Override

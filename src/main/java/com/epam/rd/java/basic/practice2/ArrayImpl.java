@@ -6,9 +6,9 @@ import java.util.NoSuchElementException;
 public class ArrayImpl implements Array {
 
     Object[] arrayList;
-    int size;
+    int sizeOfAr;
     int capcaity;
-    int length = 0;
+    int lengthAr = 0;
 
     public ArrayImpl() {
         this(0);
@@ -23,13 +23,13 @@ public class ArrayImpl implements Array {
     public void clear() {
         arrayList = new Object[0];
         capcaity = 0;
-        length = 0;
+        lengthAr = 0;
     }
 
     @Override
     public int size() {
-        size = length;
-        return length;
+        sizeOfAr = lengthAr;
+        return lengthAr;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ArrayImpl implements Array {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             } else {
-                o = arrayList[currentIndex];
+                o = get(currentIndex);
             }
             currentIndex++;
             return o;
@@ -63,8 +63,6 @@ public class ArrayImpl implements Array {
 
         @Override
         public void remove() {
-//            arrayList[currentIndex - 1] = null;
-//            currentIndex--;
         }
     }
 
@@ -77,7 +75,7 @@ public class ArrayImpl implements Array {
             arrayList = temp;
             capcaity++;
         } else {
-            if (length == capcaity) {
+            if (lengthAr == capcaity) {
                 growSize();
             } else {
                 for (int i = 1; i < capcaity; i++) {
@@ -89,7 +87,7 @@ public class ArrayImpl implements Array {
             }
             arrayList[capcaity - 1] = element;
         }
-        length++;
+        lengthAr++;
     }
 
     public void growSize() {
@@ -136,11 +134,11 @@ public class ArrayImpl implements Array {
         }
         temp = new Object[capcaity - 1];
         System.arraycopy(arrayList, 0, temp, 0, index);
-        if (index != length - 1) {
+        if (index != lengthAr - 1) {
             System.arraycopy(arrayList, index + 1, temp, index, (capcaity - index) - 1);
         }
         arrayList = temp;
-        length--;
+        lengthAr--;
         capcaity--;
     }
 
@@ -166,28 +164,28 @@ public class ArrayImpl implements Array {
         System.out.println(array);
         System.out.println(array.size());
         System.out.println(array.capcaity);
-        System.out.println(array.length);
+        System.out.println(array.lengthAr);
         array.add('A');
         System.out.println(array);
         System.out.println(array.size());
         System.out.println(array.capcaity);
-        System.out.println(array.length);
+        System.out.println(array.lengthAr);
         array.add(null);
         System.out.println(array);
         System.out.println(array.size());
         System.out.println(array.capcaity);
-        System.out.println(array.length);
+        System.out.println(array.lengthAr);
         System.out.println("-------");
         array.add('C');
         System.out.println(array);
         System.out.println(array.size());
         System.out.println(array.capcaity);
-        System.out.println(array.length);
+        System.out.println(array.lengthAr);
         array.add(null);
         System.out.println(array);
         System.out.println(array.size());
         System.out.println(array.capcaity);
-        System.out.println(array.length);
+        System.out.println(array.lengthAr);
         System.out.println(array.get(1));
         Iterator<Object> iter = array.iterator();
         while (iter.hasNext()) {
@@ -197,7 +195,7 @@ public class ArrayImpl implements Array {
         System.out.println(array);
         System.out.println(array.size());
         System.out.println(array.capcaity);
-        System.out.println(array.length);
+        System.out.println(array.lengthAr);
         System.out.println(array.get(1));
     }
 }

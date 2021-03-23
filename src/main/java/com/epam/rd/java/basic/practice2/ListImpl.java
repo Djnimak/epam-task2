@@ -175,7 +175,7 @@ public class ListImpl implements List {
         ListImpl.Node x;
         Object e = null;
         for (x = this.first; x != null; x = x.next) {
-            if (element.equals(x.data)) {
+            if (element == x.data) {
                 e = x.data;
             }
         }
@@ -190,10 +190,6 @@ public class ListImpl implements List {
             prev = cur;
             cur = cur.next;
         }
-        Object el = search(element);
-        if (el == null) {
-            return false;
-        }
         if (element == null) {
             prev.next = cur.next;
             if (cur == last) {
@@ -202,15 +198,19 @@ public class ListImpl implements List {
             --this.listSize;
             return true;
         }
-        if (this.first.data.equals(element)) {
-            this.first = this.first.next;
-            --this.listSize;
-            return true;
-        }
-        if (cur != null && cur.data.equals(element)) {
-            prev.next = cur.next;
-            --this.listSize;
-            return true;
+        if (search(element) != null) {
+            if (this.first.data == element) {
+                this.first = this.first.next;
+                --this.listSize;
+                return true;
+            }
+            if (cur != null && cur.data.equals(element)) {
+                prev.next = cur.next;
+                --this.listSize;
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
@@ -241,7 +241,8 @@ public class ListImpl implements List {
         list.addLast(null);
         list.addLast('C');
         System.out.println(list);
-        System.out.println(list.remove('D'));
+        System.out.println(list.remove(null));
+        System.out.println(list);
         System.out.println(list.search('D'));
         System.out.println(list.remove('C'));
         System.out.println(list.search('C'));
