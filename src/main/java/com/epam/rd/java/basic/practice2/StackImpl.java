@@ -102,11 +102,16 @@ public class StackImpl implements Stack {
         System.out.println(stack);
         System.out.println(iter.hasNext());
         System.out.println(iter.next());
-        iter.remove();
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(iter.hasNext());
         System.out.println(stack.size());
         System.out.println(stack.top());
-        stack.pop();
+        System.out.println(stack.pop());
         stack.clear();
+        System.out.println(stack);
     }
 
 }

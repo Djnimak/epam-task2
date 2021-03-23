@@ -8,8 +8,8 @@ public class ListImpl implements List {
 
     protected int modCount = 0;
 
-    private Node first;
-    private Node last;
+    private ListImpl.Node first;
+    private ListImpl.Node last;
     int listSize;
 
     public ListImpl() {
@@ -25,16 +25,10 @@ public class ListImpl implements List {
     static class Node {
         Object data;
         ListImpl.Node next;
-        ListImpl.Node prev;
 
-        Node(ListImpl.Node prev, Object data, ListImpl.Node next) {
+        Node(Object data) {
             this.data = data;
-            this.next = next;
-            this.prev = prev;
-        }
-
-        public Object getElement() {
-            return this.data;
+            this.next = null;
         }
     }
 
@@ -63,30 +57,30 @@ public class ListImpl implements List {
 
     private class IteratorImpl implements Iterator<Object> {
 
+        ListImpl.Node current;
         ListImpl.Node lastReturned;
         ListImpl.Node next = last;
         int nextIndex = 0;
 
+        public IteratorImpl() {
+            this.current = first;
+        }
+
         @Override
         public boolean hasNext() {
-            return this.nextIndex < listSize;
+            return nextIndex < listSize;
         }
 
         @Override
         public Object next() {
+            Object data;
             if (!hasNext()) {
                 throw new NoSuchElementException();
             } else {
-                if (this.next != null) {
-                    this.lastReturned = this.next;
-                    this.next = next.next;
-                }
-                ++this.nextIndex;
-                Object o = null;
-                if (this.lastReturned.data != null) {
-                    o = this.lastReturned.data;
-                }
-                return o;
+                data = current.data;
+                current = current.next;
+                nextIndex++;
+                return data;
             }
         }
 
@@ -96,7 +90,7 @@ public class ListImpl implements List {
                 throw new IllegalStateException();
             } else {
                 ListImpl.Node lastNext = this.lastReturned.next;
-                ListImpl.this.unlink(this.lastReturned);
+                ListImpl.this.remove(this.lastReturned);
                 if (this.next == this.lastReturned) {
                     this.next = lastNext;
                 } else {
@@ -109,70 +103,59 @@ public class ListImpl implements List {
 
     @Override
     public void addFirst(Object element) {
-        ListImpl.Node f = this.first;
-        ListImpl.Node newNode = new ListImpl.Node(null, element, f);
-        this.first = newNode;
-        if (f == null) {
-            this.last = newNode;
-        } else {
-            f.prev = newNode;
+        ListImpl.Node newNode = new ListImpl.Node(element);
+        if (this.first != null) {
+            newNode.next = first;
         }
+        first = newNode;
         ++this.listSize;
         ++this.modCount;
     }
 
     @Override
     public void addLast(Object element) {
-        ListImpl.Node l = this.last;
-        ListImpl.Node newNode = new ListImpl.Node(l, element, null);
-        this.last = newNode;
-        if (l == null) {
-            this.first = newNode;
+        ListImpl.Node newNode = new ListImpl.Node(element);
+        if (first == null) {
+            first = newNode;
         } else {
-            l.next = newNode;
+            ListImpl.Node cur = this.first;
+            while (cur.next != null) {
+                cur = cur.next;
+            }
+            cur.next = newNode;
         }
+        last = newNode;
         ++this.listSize;
-        ++this.modCount;
-    }
-
-    void unlink(Node x) {
-        ListImpl.Node next = x.next;
-        ListImpl.Node prev = x.prev;
-        if (prev == null) {
-            this.first = next;
-        } else {
-            this.last = next;
-            x.prev = null;
-        }
-        if (next == null) {
-            this.last = prev;
-        } else {
-            next.prev = prev;
-            x.next = null;
-        }
-        x.data = null;
-        --this.listSize;
         ++this.modCount;
     }
 
     @Override
     public void removeFirst() {
-        ListImpl.Node f = this.first;
-        if (f == null) {
-            throw new NoSuchElementException();
-        } else {
-            this.unlink(f);
+        if (this.first != null) {
+            this.first = this.first.next;
+            --this.listSize;
         }
+        ++this.modCount;
     }
 
     @Override
     public void removeLast() {
-        ListImpl.Node l = this.last;
-        if (l != null) {
-            this.unlink(l);
-        } else {
-            this.unlink(this.first);
+        ListImpl.Node cur = this.first;
+        ListImpl.Node prev = this.first;
+        if (this.first != null) {
+            if (this.first.next == null) {
+                this.first = null;
+            } else {
+                while (cur.next != null) {
+                    prev = cur;
+                    cur = cur.next;
+                }
+                prev.next = null;
+                last = prev;
+            }
+            --this.listSize;
         }
+        ++this.modCount;
     }
 
     @Override
@@ -209,22 +192,33 @@ public class ListImpl implements List {
 
     @Override
     public boolean remove(Object element) {
-        ListImpl.Node x;
-        if (element == null) {
-            for (x = this.first; x != null; x = x.next) {
-                if (x.data == null) {
-                    this.unlink(x);
-                    return true;
-                }
+        if (this.first != null) {
+            ListImpl.Node cur = this.first;
+            ListImpl.Node prev = this.first;
+            while (cur != last && cur.data != element) {
+                prev = cur;
+                cur = cur.next;
             }
-        } else {
-            for (x = this.first; x != null; x = x.next) {
-                if (element.equals(x.data)) {
-                    this.unlink(x);
-                    return true;
+            if (element == null) {
+                prev.next = cur.next;
+                if (cur == last) {
+                    last = prev;
                 }
+                --this.listSize;
+                return true;
+            }
+            if (this.first.data.equals(element)) {
+                this.first = this.first.next;
+                --this.listSize;
+                return true;
+            }
+            if (cur != null) {
+                prev.next = cur.next;
+                --this.listSize;
+                return true;
             }
         }
+        ++this.modCount;
         return false;
     }
 
@@ -235,26 +229,50 @@ public class ListImpl implements List {
         }
         StringBuilder s = new StringBuilder("[");
         Node current = first;
-        while (current != last) {
-            s.append(current.getElement());
+        while (current.next != null) {
+            s.append(current.data);
             s.append(", ");
             current = current.next;
         }
-        s.append(current.getElement());
+        s.append(current.data);
         s.append("]");
         return s.toString();
     }
 
     public static void main(String[] args) {
         ListImpl list = new ListImpl();
-        Iterator<Object> iter = list.iterator();
         list.addFirst('A');
         list.addLast('B');
         list.addLast('C');
         list.addLast(null);
-        list.remove(null);
+        Iterator<Object> iter = list.iterator();
+        System.out.println(list.size());
+        System.out.println(list);
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(iter.hasNext());
+        System.out.println(list.remove(null));
         System.out.println(list);
         System.out.println(list.search('A'));
+        System.out.println(list.getFirst());
+        System.out.println(list.getLast());
+        list.removeFirst();
+        list.removeLast();
+        System.out.println(list.size());
+        System.out.println(list);
+        System.out.println(list.getFirst());
+        System.out.println(list.getLast());
+        System.out.println(list.remove('B'));
+        System.out.println(list);
+        System.out.println(list.size());
+        list.clear();
+        System.out.println(list);
         System.out.println(iter.hasNext());
         list.removeFirst();
         System.out.println(list);
