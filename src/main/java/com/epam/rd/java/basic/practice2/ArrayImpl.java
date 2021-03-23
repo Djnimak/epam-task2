@@ -29,7 +29,7 @@ public class ArrayImpl implements Array {
     @Override
     public int size() {
         size = length;
-        return size;
+        return length;
     }
 
     @Override
@@ -63,8 +63,8 @@ public class ArrayImpl implements Array {
 
         @Override
         public void remove() {
-            arrayList[currentIndex - 1] = null;
-            currentIndex--;
+//            arrayList[currentIndex - 1] = null;
+//            currentIndex--;
         }
     }
 

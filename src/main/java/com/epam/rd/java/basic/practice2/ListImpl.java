@@ -5,9 +5,6 @@ import java.util.NoSuchElementException;
 
 public class ListImpl implements List {
 
-
-    protected int modCount = 0;
-
     ListImpl.Node first;
     ListImpl.Node last;
     int listSize;
@@ -43,7 +40,6 @@ public class ListImpl implements List {
         if (listSize != 0) {
             this.listSize = 0;
         }
-        ++this.modCount;
     }
 
     @Override
@@ -109,7 +105,6 @@ public class ListImpl implements List {
         }
         first = newNode;
         ++this.listSize;
-        ++this.modCount;
     }
 
     @Override
@@ -126,7 +121,6 @@ public class ListImpl implements List {
         }
         last = newNode;
         ++this.listSize;
-        ++this.modCount;
     }
 
     @Override
@@ -135,7 +129,6 @@ public class ListImpl implements List {
             this.first = this.first.next;
             --this.listSize;
         }
-        ++this.modCount;
     }
 
     @Override
@@ -155,7 +148,6 @@ public class ListImpl implements List {
             }
             --this.listSize;
         }
-        ++this.modCount;
     }
 
     @Override
@@ -192,36 +184,36 @@ public class ListImpl implements List {
 
     @Override
     public boolean remove(Object element) {
-        if (this.first != null) {
-            ListImpl.Node cur = this.first;
-            ListImpl.Node prev = this.first;
-            while (cur != last && cur.data != element) {
-                prev = cur;
-                cur = cur.next;
-            }
-            if (element == null) {
-                prev.next = cur.next;
-                if (cur == last) {
-                    last = prev;
-                }
-                --this.listSize;
-                return true;
-            }
-            if (this.first.data.equals(element)) {
-                this.first = this.first.next;
-                --this.listSize;
-                return true;
-            }
-            if (cur != null && cur.data.equals(element)) {
-                prev.next = cur.next;
-                --this.listSize;
-                return true;
-            } else {
-                return false;
-            }
+        ListImpl.Node cur = this.first;
+        ListImpl.Node prev = this.first;
+        while (cur != last && cur.data != element) {
+            prev = cur;
+            cur = cur.next;
         }
-        ++this.modCount;
-        return false;
+        Object el = search(element);
+        if (el == null) {
+            return false;
+        }
+        if (element == null) {
+            prev.next = cur.next;
+            if (cur == last) {
+                last = prev;
+            }
+            --this.listSize;
+            return true;
+        }
+        if (this.first.data.equals(element)) {
+            this.first = this.first.next;
+            --this.listSize;
+            return true;
+        }
+        if (cur != null && cur.data.equals(element)) {
+            prev.next = cur.next;
+            --this.listSize;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -243,15 +235,19 @@ public class ListImpl implements List {
 
     public static void main(String[] args) {
         ListImpl list = new ListImpl();
+        System.out.println(list.remove('D'));
         list.addFirst('A');
         list.addLast('B');
         list.addLast(null);
         list.addLast('C');
-        list.addLast(null);
         System.out.println(list);
-        System.out.println(list.search('C'));
+        System.out.println(list.remove('D'));
+        System.out.println(list.search('D'));
         System.out.println(list.remove('C'));
         System.out.println(list.search('C'));
+        System.out.println(list.remove('C'));
+        System.out.println(list.remove(null));
+        System.out.println(list.search(null));
         System.out.println(list);
         System.out.println(list.remove('A'));
         System.out.println(list);

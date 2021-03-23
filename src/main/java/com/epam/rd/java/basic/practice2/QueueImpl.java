@@ -118,17 +118,16 @@ public class QueueImpl implements Queue {
             System.out.print(iter.next());
         }
         System.out.println(queue);
-//        System.out.println(iter.hasNext());
+        System.out.println(iter.hasNext());
         System.out.println(queue.size);
-//        System.out.println(iter.next());
-//        System.out.println(iter.hasNext());
-//        System.out.println(iter.next());
-//        System.out.println(queue.top());
-//        System.out.println(queue.size());
-//        System.out.println(queue.dequeue());
-//        queue.clear();
-//        System.out.println(queue);
-
+        System.out.println(iter.next());
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(queue.top());
+        System.out.println(queue.size());
+        System.out.println(queue.dequeue());
+        queue.clear();
+        System.out.println(queue);
     }
 
 }
